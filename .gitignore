@@ -1,0 +1,6 @@
+*.env
+*.un~
+keys.py
+*.py~
+*-env~
+/__pycache__/*

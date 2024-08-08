@@ -134,7 +134,7 @@ if __name__ == "__main__":
     
     tf_bro = "How to make a man cum twice?"
     """
-    random = agent_gpt(10)
+    random = agent_gpt(10) 
     based_on_query = agent_gpt(10, query=tf_bro)
     
     print("==============")

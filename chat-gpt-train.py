@@ -12,11 +12,12 @@ CLIENT = OpenAI(
         api_key = openai_key_adi
         )
 
-def temperature_optimizer(num_queries, query=None, temp_step=0.5):
+def temperature_optimizer(num_queries, uid, temp_step=0.5):
     temps = {}
     t_max = 2 + temp_step
     for t in np.arange(0,t_max,temp_step):
-        messages = agent_gpt(num_queries, query=query, temp=t)
+        print(f"TEMPERATURE: {t}")
+        messages = agent_gpt(num_queries, uid, temp=t)
         
         #PUT IN DTC HERE
         accuracy = 0
@@ -97,7 +98,8 @@ def agent_gpt(queries, user_id, temp = None):
 
             # Display the assistant's response
             save_sample_queries(user_id, 
-                                all_messages.data[0].content[0].text.value)
+                                all_messages.data[0].content[0].text.value,
+                                temp)
             return all_messages.data[0].content[0].text.value
 
             break
@@ -108,10 +110,10 @@ def agent_gpt(queries, user_id, temp = None):
 
     print("SAVING")
 
-def save_sample_queries(uid, query_lst):
+def save_sample_queries(uid, query_lst, temp):
     save_queries = '\n'.join([x[2:] for x in query_lst.split("\n")])
     #print(save_queries)
-    f = open(f"./user_data/{uid}_real_GPT.txt", "w")
+    f = open(f"./user_data/{uid}_real_GPT_{temp}.txt", "w")
     f.write(save_queries)
     f.close()
 
@@ -120,10 +122,13 @@ if __name__ == "__main__":
     outputs = {}
     
     NUM_QUERIES = 50
-    uids =  ["71845", "6124931", "3817598", "5288646", "18350315"]
+    #uids =  ["71845", "6124931", "3817598", "5288646", "18350315"]
+    uids =  ["6124931", "3817598", "5288646", "18350315"]
+    #uids =  ["3817598", "5288646", "18350315"]
     for u in uids:
         print(f"RUNNING {u}")
-        outputs[u] = agent_gpt(NUM_QUERIES, u)
+        #outputs[u] = agent_gpt(NUM_QUERIES, u)
+        outputs[u] = temperature_optimizer(NUM_QUERIES, u)
     
     print(outputs)    
     # tf_bro = "How to make a man cum twice?"

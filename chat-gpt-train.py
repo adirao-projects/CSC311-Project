@@ -113,7 +113,7 @@ def agent_gpt(queries, user_id, temp = None):
 def save_sample_queries(uid, query_lst, temp):
     save_queries = '\n'.join([x[2:] for x in query_lst.split("\n")])
     #print(save_queries)
-    f = open(f"./user_data/{uid}_real_GPT_{temp}.txt", "w")
+    f = open(f"./user_data/{uid}_real_GPT_v2_{temp}.txt", "w")
     f.write(save_queries)
     f.close()
 
@@ -121,10 +121,10 @@ if __name__ == "__main__":
     #test = api_test(10)
     outputs = {}
     
-    NUM_QUERIES = 50
+    NUM_QUERIES = 500
     #uids =  ["71845", "6124931", "3817598", "5288646", "18350315"]
-    uids =  ["6124931", "3817598", "5288646", "18350315"]
-    #uids =  ["3817598", "5288646", "18350315"]
+    #uids =  ["6124931", "3817598", "5288646", "18350315"]
+    uids =  ["3817598", "5288646", "18350315"]
     for u in uids:
         print(f"RUNNING {u}")
         #outputs[u] = agent_gpt(NUM_QUERIES, u)
